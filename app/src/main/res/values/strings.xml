@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Saint Malo</string>
+    <string name="version_tag">Saint Malo v1.0 @ Pasko Zhelev</string>
+    <string name="game_mode">Game Mode</string>
+    <string name="solo_mode">Solo Play</string>
+    <string name="players_mode">Player vs. Player</string>
+    <string name="ai_mode">Player vs. AI</string>
+</resources>
