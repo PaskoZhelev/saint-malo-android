@@ -13,9 +13,20 @@ public class SaintMaloConstants {
 
     private SaintMaloConstants() {}
 
-    public static final Map<SpaceSymbol, String> SPACE_SYMBOLS_IMAGE_NAMES_MAP;
-    public static final List<String> DICE_IMAGES_MAP;
+    //PLAYER Const
+    public static final int INITIAL_PLAYER_COINS = 3;
+    public static final int INITIAL_PLAYER_TREES = 2;
+    public static final int INITIAL_PLAYER_POINTS = 0;
+    public static final int INITIAL_PLAYER_DEFENCE = 0;
+    public static final int INITIAL_PLAYER_CANNONS_DESTROYED = 0;
+    public static final int MAXIMUM_AMOUNT_OF_SPACES = 45;
+
+    //SPACE Const
     public static final String SPACE_SYMBOLS_IMAGE_NAMES_PREFIX = "space_symbol_";
+    public static final Map<SpaceSymbol, String> SPACE_SYMBOLS_IMAGE_NAMES_MAP;
+
+    //DICE Const
+    public static final List<String> DICE_IMAGES_MAP;
     public static final String DICE_IMAGE_PREFIX = "dice";
 
     static {

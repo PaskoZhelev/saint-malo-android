@@ -1,83 +1,106 @@
 package com.pmz.saintmalogame.utils;
 
-import android.widget.ImageView;
+import com.pmz.saintmalogame.domain.dice.Die;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class DiceRoller {
 
     private Random rand;
-    private String dieOne;
-    private String dieTwo;
-    private String dieThree;
-    private String dieFour;
-    private String dieFive;
+    private final Die dieOne;
+    private final Die dieTwo;
+    private final Die dieThree;
+    private final Die dieFour;
+    private final Die dieFive;
+    private List<Die> allDice;
 
 
     public DiceRoller() {
         rand = new Random();
-        rollDice();
+        allDice = new ArrayList<>();
+        dieOne = new Die();
+        dieTwo = new Die();
+        dieThree = new Die();
+        dieFour = new Die();
+        dieFive = new Die();
+        allDice.add(0, null);
+        allDice.add(1, dieOne);
+        allDice.add(2, dieTwo);
+        allDice.add(3, dieThree);
+        allDice.add(4, dieFour);
+        allDice.add(5, dieFive);
+        rollAllUnlockedDice();
     }
 
-    public void rollDice() {
-        setDieOne(convertNumberToStringName(
-                generateRandomNumber()));
-        setDieTwo(convertNumberToStringName(
-                generateRandomNumber()));
-        setDieThree(convertNumberToStringName(
-                generateRandomNumber()));
-        setDieFour(convertNumberToStringName(
-                generateRandomNumber()));
-        setDieFive(convertNumberToStringName(
-                generateRandomNumber()));
+    public void rollAllUnlockedDice() {
+        for (Die die : allDice) {
+            if((die != null) && !(die.isLocked())) {
+                rollDie(die);
+            }
+        }
     }
 
-    public String convertNumberToStringName(int num) {
+    private void rollDie(Die die) {
+        die.setFace(convertNumberToStringName(
+                generateRandomNumber()
+        ));
+    }
+
+    private String convertNumberToStringName(int num) {
         return ImageUtils.getDiceName(num);
     }
 
-    public int generateRandomNumber() {
+    private int generateRandomNumber() {
         return rand.nextInt(6);
     }
 
-    public String getDieOne() {
+    public Die getDieOne() {
         return dieOne;
     }
 
-    public void setDieOne(String dieOne) {
-        this.dieOne = dieOne;
-    }
-
-    public String getDieTwo() {
+    public Die getDieTwo() {
         return dieTwo;
     }
 
-    public void setDieTwo(String dieTwo) {
-        this.dieTwo = dieTwo;
-    }
-
-    public String getDieThree() {
+    public Die getDieThree() {
         return dieThree;
     }
 
-    public void setDieThree(String dieThree) {
-        this.dieThree = dieThree;
-    }
-
-    public String getDieFour() {
+    public Die getDieFour() {
         return dieFour;
     }
 
-    public void setDieFour(String dieFour) {
-        this.dieFour = dieFour;
-    }
-
-    public String getDieFive() {
+    public Die getDieFive() {
         return dieFive;
     }
 
-    public void setDieFive(String dieFive) {
-        this.dieFive = dieFive;
+    public List<Die> getAllDice() {
+        return allDice;
     }
 
+    public void changeDie(int dieNum, String dieResult) {
+        allDice.get(dieNum).setFace(dieResult);
+    }
+
+    public void lockDie(int dieNum) {
+        allDice.get(dieNum).setLocked(true);
+    }
+
+    public void unlockDie(int dieNum) {
+        allDice.get(dieNum).setLocked(false);
+    }
+
+    public void lockAllDice() {
+        for (int i = 1; i < 6; i++) {
+            dieFive.setLocked(true);
+        }
+    }
+
+    public void unlockAllDice() {
+        for (int i = 1; i < 6; i++) {
+            dieFive.setLocked(false);
+        }
+    }
 }

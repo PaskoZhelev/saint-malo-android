@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.pmz.saintmalogame.NormalGameActivity;
 import com.pmz.saintmalogame.R;
 
 public class GameModeActivity extends AppCompatActivity {
@@ -46,7 +45,7 @@ public class GameModeActivity extends AppCompatActivity {
             public void onClick(View arg0) {
 
                 Intent myIntent = new Intent(GameModeActivity.this,
-                        NormalGameActivity.class);
+                        SoloGameActivity.class);
                 startActivity(myIntent);
             }
         });

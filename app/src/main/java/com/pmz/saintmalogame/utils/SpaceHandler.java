@@ -23,19 +23,18 @@ public class SpaceHandler {
         fillDefaultSpaces();
     }
 
-    private void fillDefaultSpaces(){
-        fillSpace(allSpaces.get(21), CRATE);
-        fillSpace(allSpaces.get(22), CRATE);
-        fillSpace(allSpaces.get(26), CRATE);
-        fillSpace(allSpaces.get(31), CRATE);
-    }
-
     public void fillSpace(Space space, SpaceSymbol spaceSymbol) {
         space.fillSpace(spaceSymbol);
         filledSpaces.add(space.getId(), space);
         emptySpaces.add(space.getId(), null);
     }
 
+    private void fillDefaultSpaces(){
+        fillSpace(allSpaces.get(21), CRATE);
+        fillSpace(allSpaces.get(22), CRATE);
+        fillSpace(allSpaces.get(26), CRATE);
+        fillSpace(allSpaces.get(31), CRATE);
+    }
 
     private void generateFilledSpaces() {
         filledSpaces = new ArrayList<>();

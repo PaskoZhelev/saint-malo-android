@@ -20,7 +20,8 @@
         <activity android:name=".activities.GameActivity" />
         <activity android:name=".activities.RulesActivity" />
         <activity android:name=".activities.GameModeActivity" />
-        <activity android:name=".NormalGameActivity"></activity>
+        <activity android:name=".activities.SoloGameActivity" />
+        <activity android:name=".activities.NormalGameActivity"></activity>
     </application>
 
 </manifest>

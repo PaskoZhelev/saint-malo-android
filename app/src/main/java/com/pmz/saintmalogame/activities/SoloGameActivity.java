@@ -1,5 +1,6 @@
-package com.pmz.saintmalogame;
+package com.pmz.saintmalogame.activities;
 
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,10 +8,16 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.pmz.saintmalogame.R;
+import com.pmz.saintmalogame.domain.dice.Die;
 import com.pmz.saintmalogame.utils.DiceRoller;
 
-public class NormalGameActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SoloGameActivity extends AppCompatActivity {
 
     private Animation rotationAnimation;
     private ImageView dieOne;
@@ -18,7 +25,10 @@ public class NormalGameActivity extends AppCompatActivity {
     private ImageView dieThree;
     private ImageView dieFour;
     private ImageView dieFive;
+    private List<ImageView> allDiceImageViews;
     private DiceRoller diceRoller;
+    private int currentPlayer;
+    private TextView player1Name;
 
     private ImageView rollBtn;
 
@@ -26,14 +36,13 @@ public class NormalGameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_normal_game);
+        setContentView(R.layout.activity_solo_game);
         hideNavigationBar();
 
         setupObjects();
         setupButtons();
         setupDiceViews();
     }
-
 
 
     @Override
@@ -56,8 +65,10 @@ public class NormalGameActivity extends AppCompatActivity {
         return getResources().getIdentifier(resourceName, "drawable", getPackageName());
     }
 
+
     private void setupObjects() {
         diceRoller = new DiceRoller();
+        allDiceImageViews = new ArrayList<>();
     }
 
     private void setupButtons(){
@@ -72,21 +83,50 @@ public class NormalGameActivity extends AppCompatActivity {
 
     private void setupDiceViews(){
         rotationAnimation = AnimationUtils.loadAnimation(
-                NormalGameActivity.this,R.anim.rotateanimation);
+                SoloGameActivity.this,R.anim.rotateanimation);
         dieOne = findViewById(R.id.dieOne);
         dieTwo = findViewById(R.id.dieTwo);
         dieThree = findViewById(R.id.dieThree);
         dieFour = findViewById(R.id.dieFour);
         dieFive = findViewById(R.id.dieFive);
 
+        allDiceImageViews.add(0, null);
+        allDiceImageViews.add(1, dieOne);
+        allDiceImageViews.add(2, dieTwo);
+        allDiceImageViews.add(3, dieThree);
+        allDiceImageViews.add(4, dieFour);
+        allDiceImageViews.add(5, dieFive);
+
+        for (int i = 1; i < 6; i++) {
+            final int j = i;
+            allDiceImageViews.get(i).setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    clickDie(j);
+                }
+            });
+        }
+    }
+
+    private void clickDie(int dieNum){
+        ImageView dieImageView = allDiceImageViews.get(dieNum);
+        if(diceRoller.getAllDice().get(dieNum).isLocked()){
+            diceRoller.unlockDie(dieNum);
+            dieImageView.setBackgroundResource(0);
+        } else {
+            diceRoller.lockDie(dieNum);
+            dieImageView.setBackgroundResource(R.drawable.buttonbackground2);
+        }
     }
 
     private void rollDiceAfterRollingAnimation() {
-        applyAnimation(dieOne);
-        applyAnimation(dieTwo);
-        applyAnimation(dieThree);
-        applyAnimation(dieFour);
-        applyAnimation(dieFive);
+        for (int i = 1; i < 6; i++) {
+            Die die = diceRoller.getAllDice().get(i);
+            ImageView dieView = allDiceImageViews.get(i);
+            if(!die.isLocked()){
+                applyAnimation(dieView);
+            }
+        }
+
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -97,17 +137,15 @@ public class NormalGameActivity extends AppCompatActivity {
     }
 
     private void rollDice(){
-        diceRoller.rollDice();
+        diceRoller.rollAllUnlockedDice();
         changeDiceImages();
     }
 
     private void changeDiceImages() {
-        changeDieImageView(dieOne, diceRoller.getDieOne());
-        changeDieImageView(dieTwo, diceRoller.getDieTwo());
-        changeDieImageView(dieThree, diceRoller.getDieThree());
-        changeDieImageView(dieFour, diceRoller.getDieFour());
-        changeDieImageView(dieFive, diceRoller.getDieFive());
-
+        for (int i = 1; i < 6; i++) {
+            changeDieImageView(allDiceImageViews.get(i),
+                    diceRoller.getAllDice().get(i).getFace());
+        }
     }
 
     private void changeDieImageView(ImageView imageView, String die) {
@@ -118,4 +156,6 @@ public class NormalGameActivity extends AppCompatActivity {
     private void applyAnimation(ImageView dieView) {
         dieView.startAnimation(rotationAnimation);
     }
+
+
 }
