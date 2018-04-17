@@ -32,7 +32,7 @@
                     android:layout_height="20dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Player 1"
+                    android:text="Player"
                     android:textColor="@android:color/black"
                     android:textSize="10sp"
                     android:textStyle="bold" />
@@ -44,17 +44,18 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="Points"
+                    android:textColor="@color/saintMalo"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/pointsPlayer1"
+                    android:id="@+id/playerPoints"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="top|center"
-                    android:text="45"
-                    android:textColor="@color/saintMalo"
+                    android:text="0"
+                    android:textColor="@android:color/black"
                     android:textStyle="bold" />
 
                 <TextView
@@ -64,17 +65,18 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="Coins"
+                    android:textColor="@color/saintMalo"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/coinsPlayer1"
+                    android:id="@+id/playerCoins"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="top|center"
-                    android:text="6"
-                    android:textColor="@color/saintMalo"
+                    android:text="0"
+                    android:textColor="@android:color/holo_orange_dark"
                     android:textStyle="bold" />
 
                 <TextView
@@ -84,26 +86,69 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="Trees"
+                    android:textColor="@color/saintMalo"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/treesPlayer1"
+                    android:id="@+id/playerTrees"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="top|center"
-                    android:text="4"
+                    android:text="0"
+                    android:textColor="@android:color/holo_green_dark"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textViewDefence"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Defence"
                     android:textColor="@color/saintMalo"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/playerDefence"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:text="0"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textViewCannons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Destr. Cannons"
+                    android:textColor="@color/saintMalo"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/playerCannonsDestroyed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:text="0"
+                    android:textColor="@android:color/holo_red_dark"
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/undo1"
-                    android:layout_width="30dp"
+                    android:id="@+id/settingsBtn"
+                    android:layout_width="40dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/undobtn" />
+                    app:srcCompat="@drawable/settingsbtn" />
 
             </LinearLayout>
 
@@ -121,49 +166,49 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView96"
+                        android:id="@+id/spaceA"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView97"
+                        android:id="@+id/space1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
+                        app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView102"
+                        android:id="@+id/space2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
+                        app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView101"
+                        android:id="@+id/space3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
+                        app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView100"
+                        android:id="@+id/space4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
+                        app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView99"
+                        android:id="@+id/space5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
+                        app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView98"
+                        android:id="@+id/spaceB"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -177,53 +222,53 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView96"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/wallsymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView97"
+                        android:id="@+id/space20"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView102"
+                        android:id="@+id/space21"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView101"
+                        android:id="@+id/space22"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
+                        app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView100"
+                        android:id="@+id/space23"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
+                        app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView99"
+                        android:id="@+id/space24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
+                        app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView98"
+                        android:id="@+id/space25"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -233,273 +278,273 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView96"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/wallsymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView97"
+                        android:id="@+id/space19"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView102"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/church1symbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView101"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/soldiersymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView100"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView99"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView98"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView96"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/wallsymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView97"
+                        android:id="@+id/space26"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView102"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView101"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/church4symbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView100"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView99"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView98"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView96"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/wallsymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView97"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView102"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView101"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/housesymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView100"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView99"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView98"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView96"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/wallsymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView97"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/church2symbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView102"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView101"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView100"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView99"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-
-                    <ImageView
-                        android:id="@+id/imageView98"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView96"
+                        android:id="@+id/space27"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView97"
+                        android:id="@+id/space28"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
+                        app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView102"
+                        android:id="@+id/space29"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
+                        app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView101"
+                        android:id="@+id/space30"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
+                        app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView100"
+                        android:id="@+id/space7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
+                        app:srcCompat="@drawable/emptysymbol" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView99"
+                        android:id="@+id/space18"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/cratesymbol" />
+                        app:srcCompat="@drawable/emptysymbol" />
 
                     <ImageView
-                        android:id="@+id/imageView98"
+                        android:id="@+id/space31"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space32"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space33"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space34"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space35"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/space17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space36"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space37"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space38"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space39"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space40"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/space16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space41"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space42"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space43"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space44"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space45"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/spaceC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/space11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/emptysymbol" />
+
+                    <ImageView
+                        android:id="@+id/spaceD"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -531,42 +576,37 @@
                         android:id="@+id/dieOne"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/dicechurch" />
+                        android:layout_weight="1" />
 
                     <ImageView
                         android:id="@+id/dieTwo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/diceperson" />
+                        android:layout_weight="1" />
 
                     <ImageView
                         android:id="@+id/dieThree"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/dicepirate" />
+                        android:layout_weight="1" />
 
                     <ImageView
                         android:id="@+id/dieFour"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/dicecrate" />
+                        android:layout_weight="1" />
 
                     <ImageView
                         android:id="@+id/dieFive"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/dicewall" />
+                        android:layout_weight="1" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
+                    android:layout_margin="3dp"
                     android:layout_weight="3"
                     android:orientation="vertical">
 
@@ -574,6 +614,7 @@
                         android:id="@+id/rollBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/rollbtn3" />
 
@@ -581,15 +622,10 @@
                         android:id="@+id/endTurnBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/endbtn" />
 
-                    <ImageView
-                        android:id="@+id/statsBtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/settingsbtn" />
                 </LinearLayout>
             </LinearLayout>
 

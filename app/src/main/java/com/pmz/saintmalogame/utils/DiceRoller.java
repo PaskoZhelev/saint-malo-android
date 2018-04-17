@@ -1,6 +1,7 @@
 package com.pmz.saintmalogame.utils;
 
 import com.pmz.saintmalogame.domain.dice.Die;
+import com.pmz.saintmalogame.enums.DieType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,13 +44,17 @@ public class DiceRoller {
     }
 
     private void rollDie(Die die) {
-        die.setFace(convertNumberToStringName(
+        die.setType(convertNumberToEnum(
                 generateRandomNumber()
         ));
     }
 
     private String convertNumberToStringName(int num) {
-        return ImageUtils.getDiceName(num);
+        return ImageUtils.getDiceStringName(num);
+    }
+
+    private DieType convertNumberToEnum(int num) {
+        return ImageUtils.getDiceEnumName(num);
     }
 
     private int generateRandomNumber() {
@@ -80,8 +85,20 @@ public class DiceRoller {
         return allDice;
     }
 
-    public void changeDie(int dieNum, String dieResult) {
-        allDice.get(dieNum).setFace(dieResult);
+    public List<Die> getAllLockedDice(){
+        List<Die> lockedDice = new ArrayList<>();
+        for (int i = 1; i < 6; i++) {
+            Die die = allDice.get(i);
+            if(die.isLocked()){
+                lockedDice.add(die);
+            }
+        }
+
+        return lockedDice;
+    }
+
+    public void changeDie(int dieNum, DieType dieResult) {
+        allDice.get(dieNum).setType(dieResult);
     }
 
     public void lockDie(int dieNum) {
@@ -94,13 +111,26 @@ public class DiceRoller {
 
     public void lockAllDice() {
         for (int i = 1; i < 6; i++) {
-            dieFive.setLocked(true);
+            allDice.get(i).setLocked(true);
         }
     }
 
     public void unlockAllDice() {
         for (int i = 1; i < 6; i++) {
-            dieFive.setLocked(false);
+            allDice.get(i).setLocked(false);
         }
     }
+
+    public boolean hasDifferentLockedDice() {
+        List<Die> lockedDice = getAllLockedDice();
+        DieType dieType = lockedDice.get(0).getType();
+        for (Die die : lockedDice) {
+            if(die.getType() != dieType) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

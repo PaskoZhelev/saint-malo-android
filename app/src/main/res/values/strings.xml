@@ -5,4 +5,6 @@
     <string name="solo_mode">Solo Play</string>
     <string name="players_mode">Player vs. Player</string>
     <string name="ai_mode">Player vs. AI</string>
+    <string name="the_selected_dice_are_different">The selected Dice are different!</string>
+    <string name="you_do_not_have_enough_coins">You do not have enough Coins!</string>
 </resources>

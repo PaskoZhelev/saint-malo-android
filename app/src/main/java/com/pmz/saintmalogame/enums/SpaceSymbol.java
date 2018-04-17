@@ -2,11 +2,11 @@ package com.pmz.saintmalogame.enums;
 
 public enum SpaceSymbol {
     CRATE,
-    CROSS_LVL_1,
-    CROSS_LVL_2,
-    CROSS_LVL_3,
-    CROSS_LVL_4,
-    CROSS_LVL_5,
+    CHURCH_LVL_1,
+    CHURCH_LVL_2,
+    CHURCH_LVL_3,
+    CHURCH_LVL_4,
+    CHURCH_LVL_5,
     EMPTY,
     HOUSE,
     PERSON_CITIZEN,

@@ -154,7 +154,7 @@ public class NormalGameActivity extends AppCompatActivity {
     private void changeDiceImages() {
         for (int i = 1; i < 6; i++) {
             changeDieImageView(allDiceImageViews.get(i),
-                    diceRoller.getAllDice().get(i).getFace());
+                    diceRoller.getAllDice().get(i).getType().toString());
         }
     }
 

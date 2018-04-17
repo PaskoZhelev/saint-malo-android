@@ -1,20 +1,22 @@
 package com.pmz.saintmalogame.domain.dice;
 
+import com.pmz.saintmalogame.enums.DieType;
+
 public class Die {
 
-    private String face;
+    private DieType type;
     private boolean locked;
 
     public Die() {
         locked = false;
     }
 
-    public String getFace() {
-        return face;
+    public DieType getType() {
+        return type;
     }
 
-    public void setFace(String face) {
-        this.face = face;
+    public void setType(DieType type) {
+        this.type = type;
     }
 
     public boolean isLocked() {

@@ -71,8 +71,10 @@ public abstract class Player {
                 break;
             case DEFENCE:
                 defence += numToIncrease;
+                break;
             case CANNONS_DESTROYED:
                 cannonsDestroyed += numToIncrease;
+                break;
         }
     }
 
@@ -89,8 +91,10 @@ public abstract class Player {
                 break;
             case DEFENCE:
                 defence -= numToDecrease;
+                break;
             case CANNONS_DESTROYED:
                 cannonsDestroyed -= numToDecrease;
+                break;
         }
     }
 }

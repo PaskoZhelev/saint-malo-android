@@ -21,8 +21,8 @@ public class Board {
         numberOfSpacesFilled = 4;
     }
 
-    public void fillSpace(Space space, SpaceSymbol spaceSymbol) {
-        spaceHandler.fillSpace(space, spaceSymbol);
+    public void fillSpace(int index, SpaceSymbol spaceSymbol) {
+        spaceHandler.fillSpace(index, spaceSymbol);
         increaseNumberOfSpacesFilled();
     }
 
@@ -52,4 +52,7 @@ public class Board {
         return spaceHandler.getEmptySpaces();
     }
 
+    public List<Space> getOuterSpaces() {
+        return spaceHandler.getOuterSpaces();
+    }
 }

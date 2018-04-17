@@ -13,6 +13,7 @@ public class SpaceHandler {
     private List<Space> allSpaces;
     private List<Space> filledSpaces;
     private List<Space> emptySpaces;
+    private List<Space> outerSpaces;
 
     public SpaceHandler() {
         allSpaces = new ArrayList<>();
@@ -20,20 +21,30 @@ public class SpaceHandler {
         generateNeighbouringSpaces();
         generateFilledSpaces();
         generateUnfilledSpaces();
+        generateOuterSpaces();
         fillDefaultSpaces();
     }
 
-    public void fillSpace(Space space, SpaceSymbol spaceSymbol) {
+    public void fillSpace(int index, SpaceSymbol spaceSymbol) {
+        Space space = allSpaces.get(index);
         space.fillSpace(spaceSymbol);
         filledSpaces.add(space.getId(), space);
         emptySpaces.add(space.getId(), null);
     }
 
     private void fillDefaultSpaces(){
-        fillSpace(allSpaces.get(21), CRATE);
-        fillSpace(allSpaces.get(22), CRATE);
-        fillSpace(allSpaces.get(26), CRATE);
-        fillSpace(allSpaces.get(31), CRATE);
+        fillSpace(21, CRATE);
+        fillSpace(22, CRATE);
+        fillSpace(26, CRATE);
+        fillSpace(31, CRATE);
+    }
+
+    private void generateOuterSpaces() {
+        outerSpaces = new ArrayList<>();
+        outerSpaces.add(0, null);
+        for (int i = 1; i < 20; i++) {
+            outerSpaces.add(i, allSpaces.get(i));
+        }
     }
 
     private void generateFilledSpaces() {
@@ -527,5 +538,9 @@ public class SpaceHandler {
 
     public List<Space> getEmptySpaces() {
         return emptySpaces;
+    }
+
+    public List<Space> getOuterSpaces() {
+        return outerSpaces;
     }
 }
