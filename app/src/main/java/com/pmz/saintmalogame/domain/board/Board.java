@@ -2,8 +2,10 @@ package com.pmz.saintmalogame.domain.board;
 
 import com.pmz.saintmalogame.constants.SaintMaloConstants;
 import com.pmz.saintmalogame.enums.SpaceSymbol;
+import com.pmz.saintmalogame.utils.ChurchHandler;
 import com.pmz.saintmalogame.utils.SpaceHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.MAXIMUM_AMOUNT_OF_SPACES;
@@ -12,6 +14,7 @@ public class Board {
 
     private int numberOfSpacesFilled;
     private SpaceHandler spaceHandler;
+    private List<ChurchHandler> churchHandlersList;
     private boolean peopleBonusTaken;
     private boolean coinsBonus1Taken;
     private boolean coinsBonus2Taken;
@@ -19,12 +22,36 @@ public class Board {
 
     public Board() {
         spaceHandler = new SpaceHandler();
+        churchHandlersList = new ArrayList<>();
         numberOfSpacesFilled = 4;
+        generateChurchHandlersList();
     }
 
     public void fillSpace(int index, SpaceSymbol spaceSymbol) {
         spaceHandler.fillSpace(index, spaceSymbol);
         increaseNumberOfSpacesFilled();
+        
+        if(isChurchSymbol(spaceSymbol)){
+            for(ChurchHandler churchHandler : churchHandlersList) {
+                if(!churchHandler.containsChurch(spaceSymbol)){
+                    churchHandler.addChurch(spaceSymbol);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void generateChurchHandlersList() {
+        churchHandlersList.add(new ChurchHandler());
+        churchHandlersList.add(new ChurchHandler());
+        churchHandlersList.add(new ChurchHandler());
+        churchHandlersList.add(new ChurchHandler());
+        churchHandlersList.add(new ChurchHandler());
+        churchHandlersList.add(new ChurchHandler());
+        churchHandlersList.add(new ChurchHandler());
+        churchHandlersList.add(new ChurchHandler());
+        churchHandlersList.add(new ChurchHandler());
+        churchHandlersList.add(new ChurchHandler());
     }
 
     private void increaseNumberOfSpacesFilled() {
@@ -138,4 +165,46 @@ public class Board {
     public boolean isPointsBonusTaken() {
         return pointsBonusTaken;
     }
+
+    private boolean isChurchSymbol(SpaceSymbol symbol) {
+        switch (symbol){
+            case CHURCH_LVL_1:
+            case CHURCH_LVL_2:
+            case CHURCH_LVL_3:
+            case CHURCH_LVL_4:
+            case CHURCH_LVL_5:
+                return true;
+                
+                default:
+                    return false;
+                
+        }
+    }
+
+    public int calculateBonusFromChurches() {
+        int points = 0;
+        for(ChurchHandler churchHandler : churchHandlersList) {
+            if(churchHandler.hasChurches() && churchHandler.isStartWithOne()){
+                points += getPointAccordingToNumberOfChurches(
+                        churchHandler.calculateConsecutiveChurches());
+            }
+        }
+        return points;
+    }
+
+    private int getPointAccordingToNumberOfChurches(int numChurches) {
+        switch (numChurches){
+            case 2:
+                return 4;
+            case 3:
+                return 8;
+            case 4:
+                return 13;
+            case 5:
+                return 20;
+            default:
+                return 1;
+        }
+    }
+
 }

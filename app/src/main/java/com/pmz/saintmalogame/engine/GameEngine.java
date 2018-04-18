@@ -4,10 +4,12 @@ import com.pmz.saintmalogame.constants.SaintMaloConstants;
 import com.pmz.saintmalogame.domain.dice.Die;
 import com.pmz.saintmalogame.enums.DieType;
 import com.pmz.saintmalogame.enums.SpaceSymbol;
+import com.pmz.saintmalogame.utils.ChurchHandler;
 import com.pmz.saintmalogame.utils.DiceRoller;
 import com.pmz.saintmalogame.utils.PirateHandler;
 import com.pmz.saintmalogame.utils.SelectedSymbolHandler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,25 +35,15 @@ public abstract class GameEngine {
     private SelectedSymbolHandler symbolHandler;
     private PirateHandler pirateHandler;
     private int remainingRolls;
-    private Map<DieType, Integer> dieTypeMap;
+
 
 
     public GameEngine() {
         diceRoller = new DiceRoller();
         symbolHandler = new SelectedSymbolHandler();
         pirateHandler = new PirateHandler();
-        dieTypeMap = new HashMap<>();
-        generateEmptyDieTypeMap();
-        resetRemainingRolls();
-    }
 
-    private void generateEmptyDieTypeMap() {
-        dieTypeMap.put(DieType.PIRATE, 0);
-        dieTypeMap.put(DieType.CRATE, 0);
-        dieTypeMap.put(DieType.TREE, 0);
-        dieTypeMap.put(DieType.WALL, 0);
-        dieTypeMap.put(DieType.CHURCH, 0);
-        dieTypeMap.put(DieType.PERSON, 0);
+        resetRemainingRolls();
     }
 
     public void rollDice() {
@@ -109,7 +101,6 @@ public abstract class GameEngine {
 
 
     public void populateSymbolHandler() {
-        //TODO
         List<Die> allLockedDice = getAllLockedDice();
         DieType dieType = allLockedDice.get(0).getType();
         int numberDice = allLockedDice.size();

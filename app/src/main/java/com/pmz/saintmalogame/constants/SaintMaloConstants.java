@@ -27,6 +27,7 @@ public class SaintMaloConstants {
     public static final int ARCHITECT_1_HOUSE_POINTS_INCREASE = 3;
     public static final int ARCHITECT_2_HOUSE_POINTS_INCREASE = 6;
     public static final int ARCHITECT_3_HOUSE_POINTS_INCREASE = 9;
+    public static final int SOLO_LAST_TURN = 23;
 
 
     //SPACE Const

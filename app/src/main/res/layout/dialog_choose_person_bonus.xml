@@ -36,6 +36,14 @@
             android:layout_margin="15dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/priestbtn" />
+
+        <ImageView
+            android:id="@+id/choseMerchant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/merchantbtn" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,20 +53,28 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/choseArchitect"
+            android:id="@+id/choseArchitect1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/architectbtn" />
+            app:srcCompat="@drawable/architect1housebtn" />
 
         <ImageView
-            android:id="@+id/choseMerchant"
+            android:id="@+id/choseArchitect2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/merchantbtn" />
+            app:srcCompat="@drawable/architect2housebtn" />
+
+        <ImageView
+            android:id="@+id/choseArchitect3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/architect3housebtn" />
 
     </LinearLayout>
 

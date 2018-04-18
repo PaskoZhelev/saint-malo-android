@@ -32,6 +32,7 @@ import static com.pmz.saintmalogame.constants.SaintMaloConstants.CITIZEN_POINTS;
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.NOBLE_POINTS;
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.PIRATES_IMAGES_LIST;
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.SOLDIER_DEFENCE_INCREASE;
+import static com.pmz.saintmalogame.constants.SaintMaloConstants.SOLO_LAST_TURN;
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.SPACE_SYMBOLS_IMAGE_NAMES_MAP_REVERSE;
 import static com.pmz.saintmalogame.enums.DieType.CHURCH;
 import static com.pmz.saintmalogame.enums.DieType.PERSON;
@@ -96,9 +97,11 @@ public class SoloGameActivity extends AppCompatActivity {
 
     private ImageView rollBtn;
     private ImageView endTurnBtn;
+    private ImageView settingsBtn;
 
     private boolean fillForBonus;
     private String chosenBonusPersonSymbol;
+    private int chosenBonusHouses ;
 
 
     @Override
@@ -113,6 +116,7 @@ public class SoloGameActivity extends AppCompatActivity {
         setupSpaceView();
         makeAllSpacesUnclickable();
         updatePlayerStats();
+
     }
 
 
@@ -167,6 +171,7 @@ public class SoloGameActivity extends AppCompatActivity {
     private void setupButtons() {
         rollBtn = findViewById(R.id.rollBtn);
         endTurnBtn = findViewById(R.id.endTurnBtn);
+        settingsBtn = findViewById(R.id.settingsBtn);
 
         rollBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -181,6 +186,13 @@ public class SoloGameActivity extends AppCompatActivity {
                     endTurnButtonClicked();
                 }
 
+            }
+        });
+
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                //TODO
+                System.out.println(gameEngine.getBoard().calculateBonusFromChurches());
             }
         });
     }
@@ -247,10 +259,24 @@ public class SoloGameActivity extends AppCompatActivity {
                     chosenBonusPersonSymbol));
             gameEngine.getBoard().fillSpace(index,
                     SPACE_SYMBOLS_IMAGE_NAMES_MAP_REVERSE.get(chosenBonusPersonSymbol));
-            fillForBonus = false;
 
-            activateEffectOfPersonIfAvailable(index, chosenBonusPersonSymbol);
-            updatePlayerStats();
+            switch (chosenBonusPersonSymbol){
+                case ARCHITECT_SYMBOL:
+                    chosenBonusPersonSymbol = HOUSE_SYMBOL;
+                    break;
+                case HOUSE_SYMBOL:
+                    chosenBonusHouses--;
+                    if(chosenBonusHouses == 0) {
+                        fillForBonus = false;
+                    }
+                    break;
+                default:
+                    fillForBonus = false;
+                    activateEffectOfPersonIfAvailable(index, chosenBonusPersonSymbol);
+                    updatePlayerStats();
+                    break;
+            }
+
         }
         else {
             if (!symbolName.equals(EMPTY_SYMBOL)) {
@@ -416,7 +442,8 @@ public class SoloGameActivity extends AppCompatActivity {
         ImageView fillBtn = (ImageView) view.findViewById(R.id.fillSpaceBtn1);
         ImageView changeDieBtn = (ImageView) view.findViewById(R.id.changeDieBtn);
 
-
+        List<Die> lockedDice = gameEngine.getAllLockedDice();
+        final DieType dieType = lockedDice.get(0).getType();
 
         builder.setView(view);
         final AlertDialog dialog = builder.create();
@@ -425,8 +452,7 @@ public class SoloGameActivity extends AppCompatActivity {
         fillBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Die> lockedDice = gameEngine.getAllLockedDice();
-                DieType dieType = lockedDice.get(0).getType();
+
                 if(dieType == TREE) {
                     activateCollectDialog();
                     dialog.dismiss();
@@ -444,7 +470,7 @@ public class SoloGameActivity extends AppCompatActivity {
         changeDieBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(gameEngine.getPlayer().getCoins() >= 2) {
+                if(gameEngine.getPlayer().getCoins() >= 2 && dieType != PIRATE) {
                     activateChangeDieDialog();
                     dialog.dismiss();
                 }
@@ -576,7 +602,9 @@ public class SoloGameActivity extends AppCompatActivity {
         ImageView choseCitizen = (ImageView) view.findViewById(R.id.choseCitizen);
         ImageView choseSoldier = (ImageView) view.findViewById(R.id.choseSoldier);
         ImageView chosePriest = (ImageView) view.findViewById(R.id.chosePriest);
-        ImageView choseArchitect = (ImageView) view.findViewById(R.id.choseArchitect);
+        ImageView choseArchitect1 = (ImageView) view.findViewById(R.id.choseArchitect1);
+        ImageView choseArchitect2 = (ImageView) view.findViewById(R.id.choseArchitect2);
+        ImageView choseArchitect3 = (ImageView) view.findViewById(R.id.choseArchitect3);
         ImageView choseMerchant = (ImageView) view.findViewById(R.id.choseMerchant);
 
         makeAllUnfilledSpacesClickable();
@@ -606,18 +634,50 @@ public class SoloGameActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        choseArchitect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chosenBonusPersonSymbol = ARCHITECT_SYMBOL;
-                dialog.dismiss();
-            }
-        });
         choseMerchant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 chosenBonusPersonSymbol = MERCHANT_SYMBOL;
                 dialog.dismiss();
+            }
+        });
+        choseArchitect1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int houses = 1;
+                if(gameEngine.getPlayer().getTrees() >= houses){
+                    chosenBonusPersonSymbol = ARCHITECT_SYMBOL;
+                    gameEngine.getPlayer().decreaseResource(TREES, houses);
+                    gameEngine.getPlayer().increaseResource(POINTS, ARCHITECT_1_HOUSE_POINTS_INCREASE);
+                    chosenBonusHouses = houses;
+                    dialog.dismiss();
+                }
+            }
+        });
+        choseArchitect2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int houses = 2;
+                if(gameEngine.getPlayer().getTrees() >= houses){
+                    chosenBonusPersonSymbol = ARCHITECT_SYMBOL;
+                    gameEngine.getPlayer().decreaseResource(TREES, houses);
+                    gameEngine.getPlayer().increaseResource(POINTS, ARCHITECT_2_HOUSE_POINTS_INCREASE);
+                    chosenBonusHouses = houses;
+                    dialog.dismiss();
+                }
+            }
+        });
+        choseArchitect3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int houses = 3;
+                if(gameEngine.getPlayer().getTrees() >= houses){
+                    chosenBonusPersonSymbol = ARCHITECT_SYMBOL;
+                    gameEngine.getPlayer().decreaseResource(TREES, houses);
+                    gameEngine.getPlayer().increaseResource(POINTS, ARCHITECT_3_HOUSE_POINTS_INCREASE);
+                    chosenBonusHouses = houses;
+                    dialog.dismiss();
+                }
             }
         });
     }
@@ -764,12 +824,17 @@ public class SoloGameActivity extends AppCompatActivity {
     }
 
     private void resetTurn() {
-        makeAllSpacesUnclickable();
-        resetLockedDice();
-        checkAndMarkPirates();
-        updatePlayerStats();
-        rollForPirates();
-        gameEngine.increaseTurn();
+        if(gameEngine.getTurn() != SOLO_LAST_TURN) {
+            makeAllSpacesUnclickable();
+            resetLockedDice();
+            checkAndMarkPirates();
+            updatePlayerStats();
+            rollForPirates();
+            gameEngine.increaseTurn();
+        } else {
+            //TODO
+        }
+
     }
 
     private void resetLockedDice() {
