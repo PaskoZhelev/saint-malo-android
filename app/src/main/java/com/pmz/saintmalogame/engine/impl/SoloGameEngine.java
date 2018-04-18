@@ -10,12 +10,14 @@ public class SoloGameEngine extends GameEngine {
 
     private Board board;
     private Player player;
+    private int turn;
 
 
     public SoloGameEngine() {
         super();
         board = new Board();
         player = new NormalPlayer(board);
+        turn = 1;
     }
 
     public Board getBoard() {
@@ -26,5 +28,11 @@ public class SoloGameEngine extends GameEngine {
         return player;
     }
 
+    public int getTurn() {
+        return turn;
+    }
 
+    public void increaseTurn() {
+        turn++;
+    }
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pmz.saintmalogame.R;
@@ -17,6 +18,7 @@ import com.pmz.saintmalogame.domain.player.Player;
 import com.pmz.saintmalogame.engine.impl.SoloGameEngine;
 import com.pmz.saintmalogame.enums.DieType;
 import com.pmz.saintmalogame.enums.Resource;
+import com.pmz.saintmalogame.enums.SpaceSymbol;
 import com.pmz.saintmalogame.utils.ImageUtils;
 import com.pmz.saintmalogame.utils.SelectedSymbolHandler;
 
@@ -28,9 +30,14 @@ import static com.pmz.saintmalogame.constants.SaintMaloConstants.ARCHITECT_2_HOU
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.ARCHITECT_3_HOUSE_POINTS_INCREASE;
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.CITIZEN_POINTS;
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.NOBLE_POINTS;
+import static com.pmz.saintmalogame.constants.SaintMaloConstants.PIRATES_IMAGES_LIST;
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.SOLDIER_DEFENCE_INCREASE;
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.SPACE_SYMBOLS_IMAGE_NAMES_MAP_REVERSE;
+import static com.pmz.saintmalogame.enums.DieType.CHURCH;
+import static com.pmz.saintmalogame.enums.DieType.PERSON;
+import static com.pmz.saintmalogame.enums.DieType.PIRATE;
 import static com.pmz.saintmalogame.enums.DieType.TREE;
+import static com.pmz.saintmalogame.enums.DieType.WALL;
 import static com.pmz.saintmalogame.enums.Resource.COINS;
 import static com.pmz.saintmalogame.enums.Resource.DEFENCE;
 import static com.pmz.saintmalogame.enums.Resource.POINTS;
@@ -40,7 +47,6 @@ import static com.pmz.saintmalogame.enums.SpaceSymbol.CHURCH_LVL_2;
 import static com.pmz.saintmalogame.enums.SpaceSymbol.CHURCH_LVL_3;
 import static com.pmz.saintmalogame.enums.SpaceSymbol.CHURCH_LVL_4;
 import static com.pmz.saintmalogame.enums.SpaceSymbol.CHURCH_LVL_5;
-import static com.pmz.saintmalogame.enums.SpaceSymbol.CRATE;
 import static com.pmz.saintmalogame.enums.SpaceSymbol.PERSON_ARCHITECT;
 import static com.pmz.saintmalogame.enums.SpaceSymbol.PERSON_CITIZEN;
 import static com.pmz.saintmalogame.enums.SpaceSymbol.PERSON_JUGGLER;
@@ -59,7 +65,11 @@ public class SoloGameActivity extends AppCompatActivity {
     private static final String PRIEST_SYMBOL = "priestsymbol";
     private static final String JUGGLER_SYMBOL = "jugglersymbol";
     private static final String NOBLE_SYMBOL = "noblesymbol";
+    private static final String WALL_SYMBOL = "wallsymbol";
+    private static final String HOUSE_SYMBOL = "housesymbol";
     private static final String DEFAULT_ROLL_BUTTON_NAME = "rollbtn3";
+    private static final int ROLL_PIRATES_DELAY = 1650;
+
 
 
     private Animation rotationAnimation;
@@ -68,9 +78,9 @@ public class SoloGameActivity extends AppCompatActivity {
     private ImageView dieThree;
     private ImageView dieFour;
     private ImageView dieFive;
+
     private List<ImageView> allDiceImageViews;
     private SoloGameEngine gameEngine;
-    private int currentPlayer;
 
     private TextView player1Name;
     private TextView playerPoints;
@@ -78,12 +88,17 @@ public class SoloGameActivity extends AppCompatActivity {
     private TextView playerTrees;
     private TextView playerDefence;
     private TextView playerCannonsDestroyed;
+    private TextView currentTurn;
 
+    private LinearLayout piratesLayout;
 
     private List<ImageView> allSpaceViews;
 
     private ImageView rollBtn;
     private ImageView endTurnBtn;
+
+    private boolean fillForBonus;
+    private String chosenBonusPersonSymbol;
 
 
     @Override
@@ -145,6 +160,8 @@ public class SoloGameActivity extends AppCompatActivity {
         playerTrees = findViewById(R.id.playerTrees);
         playerDefence = findViewById(R.id.playerDefence);
         playerCannonsDestroyed = findViewById(R.id.playerCannonsDestroyed);
+        currentTurn = findViewById(R.id.currentTurn);
+        piratesLayout = findViewById(R.id.piratesLayout);
     }
 
     private void setupButtons() {
@@ -183,7 +200,7 @@ public class SoloGameActivity extends AppCompatActivity {
 
                     fillSpaceWithSymbol(j, spaceView, symbolName);
 
-                    if (symbolHandler.getNumberOfSymbolsToBeWritten() == 0) {
+                    if (symbolHandler.getNumberOfSymbolsToBeWritten() == 0 && !fillForBonus) {
                         resetTurn();
                     }
 
@@ -225,39 +242,57 @@ public class SoloGameActivity extends AppCompatActivity {
     }
 
     private void fillSpaceWithSymbol(int index, ImageView space, String symbolName) {
-        if (!symbolName.equals(EMPTY_SYMBOL)) {
+        if(fillForBonus) {
             space.setImageResource(getDrawableImageIdByName(
-                    symbolName));
+                    chosenBonusPersonSymbol));
             gameEngine.getBoard().fillSpace(index,
-                    SPACE_SYMBOLS_IMAGE_NAMES_MAP_REVERSE.get(symbolName));
-        }
+                    SPACE_SYMBOLS_IMAGE_NAMES_MAP_REVERSE.get(chosenBonusPersonSymbol));
+            fillForBonus = false;
 
-        switch (symbolName) {
-            case CITIZEN_SYMBOL:
-                collectPointsFromCitizen();
-                break;
-            case SOLDIER_SYMBOL:
-                increaseDefenceFromSoldier();
-                break;
-            case PRIEST_SYMBOL:
-                collectPointsFromPriest(index);
-                break;
-            case ARCHITECT_SYMBOL:
-                gameEngine.getSymbolHandler().setSymbolName("housesymbol");
-                break;
-            case MERCHANT_SYMBOL:
-                collectCoinsFromMerchant(index);
-                break;
-            case JUGGLER_SYMBOL:
-                collectPointsFromJuggler(index);
-                break;
-            case NOBLE_SYMBOL:
-                collectPointsFromNoble();
-                break;
+            activateEffectOfPersonIfAvailable(index, chosenBonusPersonSymbol);
+            updatePlayerStats();
         }
+        else {
+            if (!symbolName.equals(EMPTY_SYMBOL)) {
+                space.setImageResource(getDrawableImageIdByName(
+                        symbolName));
+                gameEngine.getBoard().fillSpace(index,
+                        SPACE_SYMBOLS_IMAGE_NAMES_MAP_REVERSE.get(symbolName));
+            }
+                activateEffectOfPersonIfAvailable(index, symbolName);
 
-        gameEngine.getSymbolHandler().decreaseNumberOfSymbolsToBeWritten();
+                gameEngine.getSymbolHandler().decreaseNumberOfSymbolsToBeWritten();
+            }
     }
+
+    private void activateEffectOfPersonIfAvailable(int index, String symbolName) {
+            switch (symbolName) {
+                case WALL_SYMBOL:
+                    checkForBonusIfAvailable(index);
+                    break;
+                case CITIZEN_SYMBOL:
+                    collectPointsFromCitizen();
+                    break;
+                case SOLDIER_SYMBOL:
+                    increaseDefenceFromSoldier();
+                    break;
+                case PRIEST_SYMBOL:
+                    collectPointsFromPriest(index);
+                    break;
+                case ARCHITECT_SYMBOL:
+                    gameEngine.getSymbolHandler().setSymbolName(HOUSE_SYMBOL);
+                    break;
+                case MERCHANT_SYMBOL:
+                    collectCoinsFromMerchant(index);
+                    break;
+                case JUGGLER_SYMBOL:
+                    collectPointsFromJuggler(index);
+                    break;
+                case NOBLE_SYMBOL:
+                    collectPointsFromNoble();
+                    break;
+            }
+        }
 
     private void clickDie(int dieNum) {
         ImageView dieImageView = allDiceImageViews.get(dieNum);
@@ -395,6 +430,10 @@ public class SoloGameActivity extends AppCompatActivity {
                 if(dieType == TREE) {
                     activateCollectDialog();
                     dialog.dismiss();
+                } else if (dieType == WALL) {
+                    gameEngine.populateSymbolHandler();
+                    makeAllOuterUnfilledSpacesClickable();
+                    dialog.dismiss();
                 } else {
                     gameEngine.populateSymbolHandler();
                     makeAllUnfilledSpacesClickable();
@@ -405,7 +444,10 @@ public class SoloGameActivity extends AppCompatActivity {
         changeDieBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(gameEngine.getPlayer().getCoins() >= 2) {
+                    activateChangeDieDialog();
+                    dialog.dismiss();
+                }
             }
         });
     }
@@ -421,9 +463,17 @@ public class SoloGameActivity extends AppCompatActivity {
         fillBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gameEngine.populateSymbolHandler();
-                makeAllUnfilledSpacesClickable();
-                dialog.dismiss();
+                List<Die> lockedDice = gameEngine.getAllLockedDice();
+                DieType dieType = lockedDice.get(0).getType();
+                if (dieType == WALL) {
+                    gameEngine.populateSymbolHandler();
+                    makeAllOuterUnfilledSpacesClickable();
+                    dialog.dismiss();
+                } else {
+                    gameEngine.populateSymbolHandler();
+                    makeAllUnfilledSpacesClickable();
+                    dialog.dismiss();
+                }
             }
         });
     }
@@ -432,7 +482,6 @@ public class SoloGameActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_collect, null);
         ImageView collectBtn = (ImageView) view.findViewById(R.id.collectBtn);
-
 
         builder.setView(view);
         final AlertDialog dialog = builder.create();
@@ -451,6 +500,124 @@ public class SoloGameActivity extends AppCompatActivity {
                 } else {
                     activateNotEnoughCoinsDialog();
                 }
+            }
+        });
+    }
+
+    private void activateChangeDieDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_change_die, null);
+        ImageView changeToChurch = (ImageView) view.findViewById(R.id.changeToChurch);
+        ImageView changeToCrate = (ImageView) view.findViewById(R.id.changeToCrate);
+        ImageView changeToPerson = (ImageView) view.findViewById(R.id.changeToPerson);
+        ImageView changeToTree = (ImageView) view.findViewById(R.id.changeToTree);
+        ImageView changeToWall = (ImageView) view.findViewById(R.id.changeToWall);
+
+        final Die die = gameEngine.getAllLockedDice().get(0);
+
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        changeToChurch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                die.setType(CHURCH);
+                gameEngine.getPlayer().decreaseResource(COINS, 2);
+                changeDiceImages();
+                updatePlayerStats();
+                dialog.dismiss();
+            }
+        });
+        changeToCrate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                die.setType(DieType.CRATE);
+                gameEngine.getPlayer().decreaseResource(COINS, 2);
+                changeDiceImages();
+                updatePlayerStats();
+                dialog.dismiss();
+            }
+        });
+        changeToPerson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                die.setType(PERSON);
+                gameEngine.getPlayer().decreaseResource(COINS, 2);
+                changeDiceImages();
+                updatePlayerStats();
+                dialog.dismiss();
+            }
+        });
+        changeToTree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                die.setType(TREE);
+                gameEngine.getPlayer().decreaseResource(COINS, 2);
+                changeDiceImages();
+                updatePlayerStats();
+                dialog.dismiss();
+            }
+        });
+        changeToWall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                die.setType(WALL);
+                gameEngine.getPlayer().decreaseResource(COINS, 2);
+                changeDiceImages();
+                updatePlayerStats();
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private void activateChoosePersonForBonusDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_choose_person_bonus, null);
+        ImageView choseCitizen = (ImageView) view.findViewById(R.id.choseCitizen);
+        ImageView choseSoldier = (ImageView) view.findViewById(R.id.choseSoldier);
+        ImageView chosePriest = (ImageView) view.findViewById(R.id.chosePriest);
+        ImageView choseArchitect = (ImageView) view.findViewById(R.id.choseArchitect);
+        ImageView choseMerchant = (ImageView) view.findViewById(R.id.choseMerchant);
+
+        makeAllUnfilledSpacesClickable();
+        fillForBonus = true;
+
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        choseCitizen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chosenBonusPersonSymbol = CITIZEN_SYMBOL;
+                dialog.dismiss();
+            }
+        });
+        choseSoldier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chosenBonusPersonSymbol = SOLDIER_SYMBOL;
+                dialog.dismiss();
+            }
+        });
+        chosePriest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chosenBonusPersonSymbol = PRIEST_SYMBOL;
+                dialog.dismiss();
+            }
+        });
+        choseArchitect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chosenBonusPersonSymbol = ARCHITECT_SYMBOL;
+                dialog.dismiss();
+            }
+        });
+        choseMerchant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chosenBonusPersonSymbol = MERCHANT_SYMBOL;
+                dialog.dismiss();
             }
         });
     }
@@ -598,27 +765,38 @@ public class SoloGameActivity extends AppCompatActivity {
 
     private void resetTurn() {
         makeAllSpacesUnclickable();
-        gameEngine.resetRemainingRolls();
-        unlockRollButton();
-        gameEngine.unlockAllDice();
-        resetDice();
+        resetLockedDice();
+        checkAndMarkPirates();
         updatePlayerStats();
+        rollForPirates();
+        gameEngine.increaseTurn();
     }
 
-    private void resetDice() {
+    private void resetLockedDice() {
+        gameEngine.unlockAllDice();
         for (int i = 1; i < 6; i++) {
             ImageView dieView = allDiceImageViews.get(i);
             dieView.setBackgroundResource(0);
+        }
+    }
+
+    private void hideDice() {
+        for (int i = 1; i < 6; i++) {
+            ImageView dieView = allDiceImageViews.get(i);
             dieView.setImageResource(0);
         }
     }
 
     private void updatePlayerStats() {
+        currentTurn.setText(String.valueOf(gameEngine.getTurn()));
         playerPoints.setText(String.valueOf(gameEngine.getPlayer().getPoints()));
         playerCoins.setText(String.valueOf(gameEngine.getPlayer().getCoins()));
         playerTrees.setText(String.valueOf(gameEngine.getPlayer().getTrees()));
         playerDefence.setText(String.valueOf(gameEngine.getPlayer().getDefence()));
         playerCannonsDestroyed.setText(String.valueOf(gameEngine.getPlayer().getCannonsDestroyed()));
+
+        String pirateImage = PIRATES_IMAGES_LIST.get(gameEngine.getPirates());
+        piratesLayout.setBackgroundResource(getDrawableImageIdByName(pirateImage));
     }
 
     private void collectCoinsFromMerchant(int spaceNum) {
@@ -627,7 +805,7 @@ public class SoloGameActivity extends AppCompatActivity {
         int numCrates = 0;
 
         for (Space neighbouringSpace : neighbouringSpaces) {
-            if((neighbouringSpace != null) && (neighbouringSpace.getSpaceSymbol() == CRATE)) {
+            if((neighbouringSpace != null) && (neighbouringSpace.getSpaceSymbol() == SpaceSymbol.CRATE)) {
                 numCrates++;
             }
         }
@@ -688,4 +866,58 @@ public class SoloGameActivity extends AppCompatActivity {
     private void increaseDefenceFromSoldier() {
         gameEngine.getPlayer().increaseResource(DEFENCE, SOLDIER_DEFENCE_INCREASE);
     }
+
+    private void checkForBonusIfAvailable(int index) {
+        if(index <= 5) {
+            if(gameEngine.getBoard().isPeopleBonusAvailable()){
+                activateChoosePersonForBonusDialog();
+                gameEngine.getPlayer().increaseResource(DEFENCE, 2);
+            }
+        } else if(index > 5 && index <= 10){
+            if(gameEngine.getBoard().isCoinsBonus1Available()) {
+                gameEngine.getPlayer().increaseResource(COINS, 2);
+                gameEngine.getPlayer().increaseResource(DEFENCE, 2);
+            }
+        } else if (index > 10 && index <= 15){
+            if(gameEngine.getBoard().isPointsBonusAvailable()) {
+                gameEngine.getPlayer().increaseResource(POINTS, 3);
+                gameEngine.getPlayer().increaseResource(DEFENCE, 2);
+            }
+        } else if (index > 15 && index <= 20){
+            if(gameEngine.getBoard().isCoinsBonus2Available()) {
+                gameEngine.getPlayer().increaseResource(COINS, 2);
+                gameEngine.getPlayer().increaseResource(DEFENCE, 2);
+            }
+        }
+    }
+
+    private void rollForPirates() {
+        rollDiceAfterRollingAnimation();
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkAndMarkPirates();
+                gameEngine.resetRemainingRolls();
+                hideDice();
+                unlockRollButton();
+                updatePlayerStats();
+            }
+        }, ROLL_PIRATES_DELAY);
+    }
+
+    private void checkAndMarkPirates() {
+        for (int i = 1; i < 4; i++) {
+            Die die = gameEngine.getAllDice().get(i);
+            if (die != null && die.getType() == PIRATE) {
+                gameEngine.increasePirates(1);
+                gameEngine.getPirateHandler().checkForAttack(gameEngine.getPlayer());
+            }
+        }
+    }
+
 }
+
+
+

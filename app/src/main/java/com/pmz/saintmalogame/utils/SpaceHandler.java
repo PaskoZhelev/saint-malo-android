@@ -42,7 +42,7 @@ public class SpaceHandler {
     private void generateOuterSpaces() {
         outerSpaces = new ArrayList<>();
         outerSpaces.add(0, null);
-        for (int i = 1; i < 20; i++) {
+        for (int i = 1; i < 21; i++) {
             outerSpaces.add(i, allSpaces.get(i));
         }
     }

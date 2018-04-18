@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.pmz.saintmalogame.R;
+import com.pmz.saintmalogame.engine.impl.SoloGameEngine;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View arg0) {
 
                 Intent myIntent = new Intent(MainActivity.this,
-                        GameModeActivity.class);
+                        SoloGameActivity.class);
                 startActivity(myIntent);
             }
         });

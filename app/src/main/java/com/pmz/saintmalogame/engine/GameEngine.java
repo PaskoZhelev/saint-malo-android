@@ -5,6 +5,7 @@ import com.pmz.saintmalogame.domain.dice.Die;
 import com.pmz.saintmalogame.enums.DieType;
 import com.pmz.saintmalogame.enums.SpaceSymbol;
 import com.pmz.saintmalogame.utils.DiceRoller;
+import com.pmz.saintmalogame.utils.PirateHandler;
 import com.pmz.saintmalogame.utils.SelectedSymbolHandler;
 
 import java.util.HashMap;
@@ -30,12 +31,15 @@ public abstract class GameEngine {
 
     private DiceRoller diceRoller;
     private SelectedSymbolHandler symbolHandler;
+    private PirateHandler pirateHandler;
     private int remainingRolls;
     private Map<DieType, Integer> dieTypeMap;
+
 
     public GameEngine() {
         diceRoller = new DiceRoller();
         symbolHandler = new SelectedSymbolHandler();
+        pirateHandler = new PirateHandler();
         dieTypeMap = new HashMap<>();
         generateEmptyDieTypeMap();
         resetRemainingRolls();
@@ -94,19 +98,15 @@ public abstract class GameEngine {
 
     public void decreaseRemainingRolls() {
         remainingRolls--;
+        if(remainingRolls < 0) {
+            remainingRolls = 0;
+        }
     }
 
     public void resetRemainingRolls() {
         remainingRolls = 3;
     }
 
-//    public void populateDieTypeMap() {
-//        List<Die> allDice = getAllDice();
-//        for (int i = 1; i < 6; i++) {
-//            DieType dieType = allDice.get(i).getType();
-//            dieTypeMap.put(dieType, dieTypeMap.get(dieType) + 1);
-//        }
-//    }
 
     public void populateSymbolHandler() {
         //TODO
@@ -192,4 +192,17 @@ public abstract class GameEngine {
     public SelectedSymbolHandler getSymbolHandler() {
         return symbolHandler;
     }
+
+    public PirateHandler getPirateHandler() {
+        return pirateHandler;
+    }
+
+    public int getPirates() {
+        return pirateHandler.getNumberOfPirates();
+    }
+
+    public void increasePirates(int num) {
+        pirateHandler.increasePirates(num);
+    }
+
 }

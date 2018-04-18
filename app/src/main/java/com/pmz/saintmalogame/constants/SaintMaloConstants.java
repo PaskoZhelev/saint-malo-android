@@ -37,6 +37,7 @@ public class SaintMaloConstants {
     //DICE Const
     public static final List<String> DICE_IMAGES_LIST;
     public static final List<DieType> DICE_TO_ENUM_LIST;
+    public static final List<String> PIRATES_IMAGES_LIST;
     public static final String DICE_IMAGE_PREFIX = "dice";
 
     //IMAGE Const
@@ -48,6 +49,7 @@ public class SaintMaloConstants {
         DICE_IMAGES_LIST = new ArrayList<>();
         DICE_TO_ENUM_LIST = new ArrayList<>();
         ROLL_BTN_IMAGES_LIST = new ArrayList<>();
+        PIRATES_IMAGES_LIST = new ArrayList<>();
         SPACE_SYMBOLS_IMAGE_NAMES_MAP.put(CRATE,        "crate");
         SPACE_SYMBOLS_IMAGE_NAMES_MAP.put(CHURCH_LVL_1, "church1");
         SPACE_SYMBOLS_IMAGE_NAMES_MAP.put(CHURCH_LVL_2, "church2");
@@ -88,6 +90,34 @@ public class SaintMaloConstants {
         DICE_IMAGES_LIST.add(3, "wall");
         DICE_IMAGES_LIST.add(4, "church");
         DICE_IMAGES_LIST.add(5, "person");
+
+        PIRATES_IMAGES_LIST.add(0, "pirates0");
+        PIRATES_IMAGES_LIST.add(1, "pirates1");
+        PIRATES_IMAGES_LIST.add(2, "pirates2");
+        PIRATES_IMAGES_LIST.add(3, "pirates3");
+        PIRATES_IMAGES_LIST.add(4, "pirates4");
+        PIRATES_IMAGES_LIST.add(5, "pirates5");
+        PIRATES_IMAGES_LIST.add(6, "pirates6");
+        PIRATES_IMAGES_LIST.add(7, "pirates7");
+        PIRATES_IMAGES_LIST.add(8, "pirates8");
+        PIRATES_IMAGES_LIST.add(9, "pirates9");
+        PIRATES_IMAGES_LIST.add(10, "pirates10");
+        PIRATES_IMAGES_LIST.add(11, "pirates11");
+        PIRATES_IMAGES_LIST.add(12, "pirates12");
+        PIRATES_IMAGES_LIST.add(13, "pirates13");
+        PIRATES_IMAGES_LIST.add(14, "pirates14");
+        PIRATES_IMAGES_LIST.add(15, "pirates15");
+        PIRATES_IMAGES_LIST.add(16, "pirates16");
+        PIRATES_IMAGES_LIST.add(17, "pirates17");
+        PIRATES_IMAGES_LIST.add(18, "pirates18");
+        PIRATES_IMAGES_LIST.add(19, "pirates19");
+        PIRATES_IMAGES_LIST.add(20, "pirates20");
+        PIRATES_IMAGES_LIST.add(21, "pirates21");
+        PIRATES_IMAGES_LIST.add(22, "pirates22");
+        PIRATES_IMAGES_LIST.add(23, "pirates23");
+        PIRATES_IMAGES_LIST.add(24, "pirates24");
+
+
 
         DICE_TO_ENUM_LIST.add(0, DieType.PIRATE);
         DICE_TO_ENUM_LIST.add(1, DieType.CRATE);
