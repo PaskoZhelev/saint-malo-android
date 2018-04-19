@@ -35,4 +35,17 @@ public class SoloGameEngine extends GameEngine {
     public void increaseTurn() {
         turn++;
     }
+
+    public int calculateEndPoints() {
+        int points = player.getPoints();
+        int resources = player.getTrees() + (player.getCoins() / 2);
+        int churchPoints = board.calculateBonusFromChurches();
+        int pointsForFullCompletion = 0;
+        if(board.isFilledEntirely()){
+            pointsForFullCompletion = 5;
+        }
+        int pointsFromCannonsDestroyed = player.getCannonsDestroyed() * 5;
+
+        return (points + resources + churchPoints + pointsForFullCompletion) - pointsFromCannonsDestroyed;
+    }
 }

@@ -29,9 +29,11 @@ import static com.pmz.saintmalogame.constants.SaintMaloConstants.ARCHITECT_1_HOU
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.ARCHITECT_2_HOUSE_POINTS_INCREASE;
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.ARCHITECT_3_HOUSE_POINTS_INCREASE;
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.CITIZEN_POINTS;
+import static com.pmz.saintmalogame.constants.SaintMaloConstants.MAX_PIRATES;
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.NOBLE_POINTS;
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.PIRATES_IMAGES_LIST;
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.SOLDIER_DEFENCE_INCREASE;
+import static com.pmz.saintmalogame.constants.SaintMaloConstants.SOLO_END_CONDITION_WIN;
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.SOLO_LAST_TURN;
 import static com.pmz.saintmalogame.constants.SaintMaloConstants.SPACE_SYMBOLS_IMAGE_NAMES_MAP_REVERSE;
 import static com.pmz.saintmalogame.enums.DieType.CHURCH;
@@ -100,6 +102,7 @@ public class SoloGameActivity extends AppCompatActivity {
     private ImageView settingsBtn;
 
     private boolean fillForBonus;
+    private boolean piratesRoll;
     private String chosenBonusPersonSymbol;
     private int chosenBonusHouses ;
 
@@ -191,8 +194,7 @@ public class SoloGameActivity extends AppCompatActivity {
 
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                //TODO
-                System.out.println(gameEngine.getBoard().calculateBonusFromChurches());
+                activateSettingsDialog();
             }
         });
     }
@@ -332,11 +334,22 @@ public class SoloGameActivity extends AppCompatActivity {
     }
 
     private void rollDiceAfterRollingAnimation() {
-        for (int i = 1; i < 6; i++) {
-            Die die = gameEngine.getDie(i);
-            ImageView dieView = allDiceImageViews.get(i);
-            if (!die.isLocked()) {
-                applyAnimation(dieView);
+        if(!piratesRoll) {
+            for (int i = 1; i < 6; i++) {
+                Die die = gameEngine.getDie(i);
+                ImageView dieView = allDiceImageViews.get(i);
+                if (!die.isLocked()) {
+                    applyAnimation(dieView);
+                }
+            }
+        } else {
+            hideLast2Dice();
+            for (int i = 1; i < 4; i++) {
+                Die die = gameEngine.getDie(i);
+                ImageView dieView = allDiceImageViews.get(i);
+                if (!die.isLocked()) {
+                    applyAnimation(dieView);
+                }
             }
         }
 
@@ -746,6 +759,40 @@ public class SoloGameActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    private void activateSettingsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_settings, null);
+        TextView playerEndPoints = (TextView) view.findViewById(R.id.playerCurrentEndPoints);
+
+        int endPoints = gameEngine.calculateEndPoints();
+        playerEndPoints.setText(String.valueOf(endPoints));
+
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void activateEndGameDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_end_game, null);
+        TextView endCondition = (TextView) view.findViewById(R.id.endCondition);
+        TextView playerEndPoints = (TextView) view.findViewById(R.id.playerEndPoints);
+
+        int endPoints = gameEngine.calculateEndPoints();
+        System.out.println(endPoints);
+        playerEndPoints.setText(String.valueOf(endPoints));
+
+        if(endPoints >= SOLO_END_CONDITION_WIN) {
+            endCondition.setText(R.string.you_win);
+        } else {
+            endCondition.setText(R.string.you_ve_lost);
+        }
+
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     private void activateDifferentLockedDice() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_different_locked_dice, null);
@@ -759,6 +806,24 @@ public class SoloGameActivity extends AppCompatActivity {
         if (gameEngine.getRemainingRolls() == 0) {
             makeImageViewUnclickable(rollBtn);
         }
+
+        if(checkIfAllDicePirates()) {
+            resetTurn();
+        }
+
+    }
+
+    private boolean checkIfAllDicePirates() {
+        List<Die> dice = gameEngine.getAllDice();
+        for (Die die : dice) {
+            if(die != null) {
+                if(die.getType() != PIRATE) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private void unlockRollButton() {
@@ -767,9 +832,16 @@ public class SoloGameActivity extends AppCompatActivity {
     }
 
     private void changeDiceImages() {
-        for (int i = 1; i < 6; i++) {
-            changeImageView(allDiceImageViews.get(i),
-                    gameEngine.getDieStringName(i));
+        if(!piratesRoll){
+            for (int i = 1; i < 6; i++) {
+                changeImageView(allDiceImageViews.get(i),
+                        gameEngine.getDieStringName(i));
+            }
+        } else {
+            for (int i = 1; i < 4; i++) {
+                changeImageView(allDiceImageViews.get(i),
+                        gameEngine.getDieStringName(i));
+            }
         }
     }
 
@@ -824,17 +896,17 @@ public class SoloGameActivity extends AppCompatActivity {
     }
 
     private void resetTurn() {
-        if(gameEngine.getTurn() != SOLO_LAST_TURN) {
+
             makeAllSpacesUnclickable();
             resetLockedDice();
             checkAndMarkPirates();
             updatePlayerStats();
             rollForPirates();
             gameEngine.increaseTurn();
-        } else {
-            //TODO
-        }
 
+        if(gameEngine.getTurn() == SOLO_LAST_TURN) {
+            activateEndGameDialog();
+        }
     }
 
     private void resetLockedDice() {
@@ -842,6 +914,20 @@ public class SoloGameActivity extends AppCompatActivity {
         for (int i = 1; i < 6; i++) {
             ImageView dieView = allDiceImageViews.get(i);
             dieView.setBackgroundResource(0);
+        }
+    }
+
+    private void showLast2Dice(){
+        for (int i = 4; i < 6; i++) {
+            ImageView dieView = allDiceImageViews.get(i);
+            dieView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideLast2Dice(){
+        for (int i = 4; i < 6; i++) {
+            ImageView dieView = allDiceImageViews.get(i);
+            dieView.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -957,14 +1043,17 @@ public class SoloGameActivity extends AppCompatActivity {
     }
 
     private void rollForPirates() {
+        piratesRoll = true;
         rollDiceAfterRollingAnimation();
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                checkAndMarkPirates();
+                checkAndMarkFirstThreePirates();
                 gameEngine.resetRemainingRolls();
+                showLast2Dice();
+                piratesRoll = false;
                 hideDice();
                 unlockRollButton();
                 updatePlayerStats();
@@ -973,6 +1062,18 @@ public class SoloGameActivity extends AppCompatActivity {
     }
 
     private void checkAndMarkPirates() {
+        if(gameEngine.getPirates() < MAX_PIRATES) {
+            for (int i = 1; i < 6; i++) {
+                Die die = gameEngine.getAllDice().get(i);
+                if (die != null && die.getType() == PIRATE) {
+                    gameEngine.increasePirates(1);
+                    gameEngine.getPirateHandler().checkForAttack(gameEngine.getPlayer());
+                }
+            }
+        }
+    }
+
+    private void checkAndMarkFirstThreePirates() {
         for (int i = 1; i < 4; i++) {
             Die die = gameEngine.getAllDice().get(i);
             if (die != null && die.getType() == PIRATE) {
@@ -981,6 +1082,8 @@ public class SoloGameActivity extends AppCompatActivity {
             }
         }
     }
+
+
 
 }
 

@@ -1,7 +1,10 @@
 package com.pmz.saintmalogame.utils;
 
+import com.pmz.saintmalogame.constants.SaintMaloConstants;
 import com.pmz.saintmalogame.domain.player.Player;
 import com.pmz.saintmalogame.enums.Resource;
+
+import static com.pmz.saintmalogame.constants.SaintMaloConstants.MAX_PIRATES;
 
 public class PirateHandler {
 
@@ -13,6 +16,10 @@ public class PirateHandler {
 
     public void increasePirates(int num) {
         numberOfPirates += num;
+
+        if(numberOfPirates > MAX_PIRATES) {
+            numberOfPirates = MAX_PIRATES + 1;
+        }
     }
 
     public int getNumberOfPirates() {

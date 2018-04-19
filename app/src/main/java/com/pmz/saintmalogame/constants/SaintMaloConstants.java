@@ -27,7 +27,9 @@ public class SaintMaloConstants {
     public static final int ARCHITECT_1_HOUSE_POINTS_INCREASE = 3;
     public static final int ARCHITECT_2_HOUSE_POINTS_INCREASE = 6;
     public static final int ARCHITECT_3_HOUSE_POINTS_INCREASE = 9;
-    public static final int SOLO_LAST_TURN = 23;
+    public static final int SOLO_LAST_TURN = 24;
+    public static final int SOLO_END_CONDITION_WIN = 50;
+    public static final int MAX_PIRATES = 24;
 
 
     //SPACE Const
@@ -117,6 +119,7 @@ public class SaintMaloConstants {
         PIRATES_IMAGES_LIST.add(22, "pirates22");
         PIRATES_IMAGES_LIST.add(23, "pirates23");
         PIRATES_IMAGES_LIST.add(24, "pirates24");
+        PIRATES_IMAGES_LIST.add(25, "pirates24");
 
 
 

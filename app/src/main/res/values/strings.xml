@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">Saint Malo</string>
-    <string name="version_tag">Saint Malo v1.1 @ Pasko Zhelev</string>
+    <string name="version_tag">Saint Malo v1.3 @ Pasko Zhelev</string>
     <string name="game_mode">Game Mode</string>
     <string name="solo_mode">Solo Play</string>
     <string name="players_mode">Player vs. Player</string>
     <string name="ai_mode">Player vs. AI</string>
     <string name="the_selected_dice_are_different">The selected Dice are different!</string>
     <string name="you_do_not_have_enough_coins">You do not have enough Coins!</string>
+    <string name="you_win">You Win!!!</string>
+    <string name="you_ve_lost">You\'ve Lost!!!</string>
 </resources>
