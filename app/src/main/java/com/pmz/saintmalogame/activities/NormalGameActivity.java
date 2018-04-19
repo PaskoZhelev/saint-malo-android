@@ -71,7 +71,6 @@ public class NormalGameActivity extends AppCompatActivity {
     private void setupPlayers() {
         currentPlayer = 1;     //assign 1 to player 1 and -1 to player 2
         player1Name = findViewById(R.id.player1name);
-        player2Name = findViewById(R.id.player2name);
     }
 
     private void setupObjects() {
