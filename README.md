@@ -2,8 +2,8 @@
 
 Android version of the dice game Saint Malo
 
-![Screenshot](screenshot1.jpg)
-![Screenshot](screenshot2.jpg)
-![Screenshot](screenshot3.jpg)
+![Screenshot](screenshot1.png)
+![Screenshot](screenshot2.png)
+![Screenshot](screenshot3.png)
 
 
