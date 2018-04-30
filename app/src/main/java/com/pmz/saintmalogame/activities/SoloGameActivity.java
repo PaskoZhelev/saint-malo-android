@@ -904,9 +904,6 @@ public class SoloGameActivity extends AppCompatActivity {
             rollForPirates();
             gameEngine.increaseTurn();
 
-        if(gameEngine.getTurn() == SOLO_LAST_TURN) {
-            activateEndGameDialog();
-        }
     }
 
     private void resetLockedDice() {
@@ -1057,6 +1054,10 @@ public class SoloGameActivity extends AppCompatActivity {
                 hideDice();
                 unlockRollButton();
                 updatePlayerStats();
+
+                if((gameEngine.getTurn() == SOLO_LAST_TURN) || gameEngine.getBoard().isFilledEntirely()) {
+                    activateEndGameDialog();
+                }
             }
         }, ROLL_PIRATES_DELAY);
     }
